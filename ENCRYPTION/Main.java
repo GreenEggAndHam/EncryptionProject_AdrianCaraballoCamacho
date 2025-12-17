@@ -16,6 +16,30 @@ String Decoded = decodeC(Decryptedletters);
 String Final = reverse(Decoded);
 
   void init(){
+    // Encoding the plaintext:
+    String file = Input.readFile("Original.txt");
+    // Encode level 1 (reverse)
+    String encodedMsg1 = reverse(file);
+    Input.writeFile("Encode1.txt", encodedMsg1);
+    // // Encode level 2 (cipher )
+    String encodedMsg2 = encodeC(encodedMsg1);
+    Input.writeFile("Encode2.txt", encodedMsg2);
+    // // Encode level 3 (letter to number)
+    String encodedMsg3 = letternumber(encodedMsg2);
+    Input.writeFile("Encode3.txt", encodedMsg3);
+
+    
+    // Decoding the ciphertext: 
+    String file2 = Input.readFile("Encode3.txt");
+    // Decode level 1  (number to letter)
+    String decodedMsg1 = decryptLetternumber(file2);
+    Input.writeFile("Decode1.txt", decodedMsg1);
+    // Decode level 2 (cipher)
+    String decodedMsg2 = decodeC(decodedMsg1);
+    Input.writeFile("Decode2.txt", decodedMsg2);
+    // Decode level 3 (reverse)
+    String decodedMsg3 = reverse(decodedMsg2);
+    Input.writeFile("Decode3.txt", decodedMsg3);
 
     print(originale);
     print(reversed);
@@ -38,7 +62,7 @@ String Final = reverse(Decoded);
   }
   
   
-  // Encoding #2: Ciphering by Random numbers
+  // Encoding #2: Ciphering by 6
   String encodeC(String txt){
     String build = "";
     int ascii = 0;
@@ -53,7 +77,7 @@ String Final = reverse(Decoded);
     return build;
   }
 
-  // Decoding #2: Ciphering by random numbers
+  // Decoding #2: Ciphering by 6
   String decodeC(String txt){
     String build="";
     int ascii;
@@ -71,34 +95,35 @@ String Final = reverse(Decoded);
   // Read the "Letter to number encryption explanation" google doc for the explanation of this function
   String letternumber(String s){
     String build = "";
-    StringBuilder sb = new StringBuilder();
+    StringBuilder supes = new StringBuilder();
     for(int x = 0; x < s.length(); x++){
       char bats = s.charAt(x);
       if(Character.isLetter(bats)){
         int john = Character.toUpperCase(bats) - 'A' + 1;
         char hermano = Character.isUpperCase(bats) ? 'U' : 'L';
-        sb.append(john).append(hermano);
+        supes.append(john).append(hermano);
       } else {
-        sb.append(bats);
+        supes.append(bats);
       }
-      if(x != s.length() - 1) sb.append('-');
+      if(x != s.length() - 1) 
+        supes.append('-');
     }
-    return build += sb;
+    return build += supes;
   }
  
  
  // DECODING #1: Number to letter coding
-String decryptLetternumber(String s){
+String decryptLetternumber(String cheese){
    String build = "";
-    StringBuilder sb = new StringBuilder();
-    for(String p : s.split("-")){
+    StringBuilder wonder = new StringBuilder();
+    for(String p : cheese.split("-")){
         if(Character.isDigit(p.charAt(0))){
-            int n = Integer.parseInt(p.replaceAll("[^0-9]", ""));
-            char c = (char)('A' + n - 1);
-            sb.append(p.contains("L") ? Character.toLowerCase(c) : c);
-        } else sb.append(p);
+            int eger = Integer.parseInt(p.replaceAll("[^0-9]", ""));
+            char coal = (char)('A' + eger - 1);
+            wonder.append(p.contains("L") ? Character.toLowerCase(coal) : coal);
+        } else wonder.append(p);
     }
-    return build += sb;
+    return build += wonder;
 }
 
 
